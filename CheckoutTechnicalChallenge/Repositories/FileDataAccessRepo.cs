@@ -30,17 +30,34 @@ namespace CheckoutTechnicalChallenge.Repositories
             }
         }
 
-        public void AddOrUpdateBasket(Guid basketId, Item item)
+        public Basket AddOrUpdateBasket(Guid basketId, Item item)
         {
+            if (string.IsNullOrWhiteSpace(item.ItemName) || item.ItemQuantity.Equals(0))
+            {
+                throw new ApplicationException("item is not valid");
+            }
+
             Basket b = GetBasket(basketId);
             if (b == null)
             {
                 throw new ApplicationException("Basket Id is invalid");
             }
 
+            if (b.Items == null)
+            {
+                b.Items = new List<Item>();
+            }
+
+            if (item.ItemId == Guid.Empty)
+            {
+                item.ItemId = Guid.NewGuid();
+            }
+
             b.Items.RemoveAll(f => f.ItemId.Equals(item.ItemId));
             b.Items.Add(item);
-            SaveDatabase()
+            SaveDatabase();
+
+            return b;
         }
 
         public void ClearBasket(Guid basketId)
@@ -51,7 +68,7 @@ namespace CheckoutTechnicalChallenge.Repositories
                 throw new ApplicationException("Basket Id is invalid");
             }
 
-            _database.Remove(basketId);
+            b.Items = new List<Item>();
             SaveDatabase();
         }
 
@@ -64,7 +81,7 @@ namespace CheckoutTechnicalChallenge.Repositories
             return g;
         }
 
-        public void RemoveFromBasket(Guid basketId, Guid itemId)
+        public Basket RemoveFromBasket(Guid basketId, Guid itemId)
         {
             Basket b = GetBasket(basketId);
             if (b == null)
@@ -74,6 +91,8 @@ namespace CheckoutTechnicalChallenge.Repositories
 
             b.Items.RemoveAll(f => f.ItemId.Equals(itemId));
             SaveDatabase();
+
+            return b;
         }
 
         /// <summary>
