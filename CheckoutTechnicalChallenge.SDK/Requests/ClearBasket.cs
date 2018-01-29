@@ -1,6 +1,4 @@
-﻿using CheckoutTechnicalChallenge.SDK.Models;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace CheckoutTechnicalChallenge.SDK.Requests
 {
-    public class AddToBasket : BaseRequest
+    class ClearBasket : BaseRequest
     {
         private Guid _basketId;
-        private Item _item;
 
-        public AddToBasket(Guid basketId, Item item)
+        public ClearBasket(Guid basketId)
         {
             _basketId = basketId;
-            _item = item;
         }
 
         public override string requestUrl { get => string.Concat(base.baseUrl, "api/v1/", _basketId); }
 
-        public override string jsonString { get => JsonConvert.SerializeObject(_item); }
+        public override string jsonString { get => string.Empty; }
     }
 }

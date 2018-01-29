@@ -1,0 +1,84 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Checkout",
+		"_postman_id": "7e1b3bf6-cb55-6e80-6296-1f0550d8a7a3",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateBasket",
+			"request": {
+				"url": "http://localhost:49921/api/v1/",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add To Basket",
+			"request": {
+				"url": "http://localhost:49921/api/v1/72e8775f-0bfc-4d37-a3c7-734fea77b8f6",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ItemName\":\"JayTesting\",\n\t\"ItemQuantity\": 10\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Clear Basket",
+			"request": {
+				"url": "http://localhost:49921/api/v1/7de1a4f2-7318-4199-ab77-227da8a8e7e9",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Clear Item",
+			"request": {
+				"url": "http://localhost:49921/api/v1/72e8775f-0bfc-4d37-a3c7-734fea77b8f6/ea278688-7465-406b-a764-f8f82ae23b01",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Basket",
+			"request": {
+				"url": "http://localhost:49921/api/v1/7de1a4f2-7318-4199-ab77-227da8a8e7e9/",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ItemId\": \"ea278688-7465-406b-a764-f8f82ae23b01\",\n\t\"ItemName\":\"JayTesting111\",\n\t\"ItemQuantity\": 10\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

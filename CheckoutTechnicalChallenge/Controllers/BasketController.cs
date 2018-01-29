@@ -10,15 +10,25 @@ using System.Web.Http;
 
 namespace CheckoutTechnicalChallenge.Controllers
 {
+    /// <summary>
+    /// BasketController
+    /// </summary>
     public class BasketController : ApiController
     {
         IDataAccessRepo repo;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public BasketController()
         {
             repo = new FileDataAccessRepo();
         }
 
+        /// <summary>
+        /// Create Basket
+        /// </summary>
+        /// <returns></returns>
         [Route("api/v1")]
         [HttpPost]
         public IHttpActionResult CreateBasket()
@@ -27,6 +37,11 @@ namespace CheckoutTechnicalChallenge.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Get a basket by basketId
+        /// </summary>
+        /// <param name="basketId"></param>
+        /// <returns></returns>
         [Route("api/v1/{basketId:Guid}")]
         [HttpGet]
         public IHttpActionResult GetBasket(Guid basketId)
@@ -40,7 +55,11 @@ namespace CheckoutTechnicalChallenge.Controllers
             return Ok(currentBasket);
         }
 
-
+        /// <summary>
+        /// Clear a basket by basketId
+        /// </summary>
+        /// <param name="basketId"></param>
+        /// <returns></returns>
         [Route("api/v1/{basketId:Guid}")]
         [HttpDelete]
         public IHttpActionResult ClearBasket(Guid basketId)
@@ -54,6 +73,12 @@ namespace CheckoutTechnicalChallenge.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Add an item to basket 
+        /// </summary>
+        /// <param name="basketId"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
         [Route("api/v1/{basketId:Guid}")]
         [HttpPut]
         public IHttpActionResult AddToBasket(Guid basketId, [FromBody]Item item)
@@ -76,6 +101,12 @@ namespace CheckoutTechnicalChallenge.Controllers
             return Ok(currentBasket);
         }
 
+        /// <summary>
+        /// Update a basket with an item
+        /// </summary>
+        /// <param name="basketId"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
         [Route("api/v1/{basketId:Guid}")]
         [HttpPatch]
         public IHttpActionResult UpdateBasket(Guid basketId, [FromBody]Item item)
@@ -98,7 +129,12 @@ namespace CheckoutTechnicalChallenge.Controllers
             return Ok(currentBasket);
         }
 
-
+        /// <summary>
+        /// Remove an item from a basket
+        /// </summary>
+        /// <param name="basketId"></param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
         [Route("api/v1/{basketId:Guid}/{itemId:Guid}")]
         [HttpDelete]
         public IHttpActionResult RemoveFromBasket(Guid basketId, Guid itemId)

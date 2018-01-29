@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CheckoutTechnicalChallenge.SDK.Requests
 {
-    public class AddToBasket : BaseRequest
+    public class UpdateBasket : BaseRequest
     {
         private Guid _basketId;
         private Item _item;
 
-        public AddToBasket(Guid basketId, Item item)
+        public UpdateBasket(Guid basketId, Item item)
         {
             _basketId = basketId;
             _item = item;
