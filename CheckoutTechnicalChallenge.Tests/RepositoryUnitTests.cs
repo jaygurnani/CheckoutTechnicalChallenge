@@ -8,12 +8,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CheckoutTechnicalChallenge.Tests
 {
     [TestClass]
-    public class UnitTests
+    public class RepositoryUnitTests
     {
         #region Repository Tests
 
         private IDataAccessRepo repo;
-        public UnitTests()
+        public RepositoryUnitTests()
         {
             repo = new FileDataAccessRepo();
         }
