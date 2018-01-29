@@ -13,7 +13,11 @@ namespace CheckoutTechnicalChallenge.Interfaces
 
         void ClearBasket(Guid basketId);
 
-        Basket AddOrUpdateBasket(Guid basketId, Item item);
+        Basket GetBasket(Guid basketId);
+
+        Basket AddToBasket(Guid basketId, Item item);
+
+        Basket UpdateBasket(Guid basketId, Item item);
 
         Basket RemoveFromBasket(Guid basketId, Guid itemId);
     }

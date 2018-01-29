@@ -28,6 +28,20 @@ namespace CheckoutTechnicalChallenge.Controllers
         }
 
         [Route("api/v1/{basketId:Guid}")]
+        [HttpGet]
+        public IHttpActionResult GetBasket(Guid basketId)
+        {
+            if (basketId == Guid.Empty)
+            {
+                return BadRequest("basketId is not valid");
+            }
+
+            var currentBasket = repo.GetBasket(basketId);
+            return Ok(currentBasket);
+        }
+
+
+        [Route("api/v1/{basketId:Guid}")]
         [HttpDelete]
         public IHttpActionResult ClearBasket(Guid basketId)
         {
@@ -42,7 +56,7 @@ namespace CheckoutTechnicalChallenge.Controllers
 
         [Route("api/v1/{basketId:Guid}")]
         [HttpPut]
-        public IHttpActionResult AddOrUpdateBasket(Guid basketId, [FromBody]Item item)
+        public IHttpActionResult AddToBasket(Guid basketId, [FromBody]Item item)
         {
             if (basketId == Guid.Empty)
             {
@@ -53,10 +67,37 @@ namespace CheckoutTechnicalChallenge.Controllers
             {
                 return BadRequest("item is not valid");
             }
+            if (item.ItemId.HasValue)
+            {
+                return BadRequest("Item has an Id, please update the item instead");
+            }
 
-            var currentBasket = repo.AddOrUpdateBasket(basketId, item);
+            var currentBasket = repo.AddToBasket(basketId, item);
             return Ok(currentBasket);
         }
+
+        [Route("api/v1/{basketId:Guid}")]
+        [HttpPatch]
+        public IHttpActionResult UpdateBasket(Guid basketId, [FromBody]Item item)
+        {
+            if (basketId == Guid.Empty)
+            {
+                return BadRequest("basketId is not valid");
+            }
+
+            if (item == null)
+            {
+                return BadRequest("item is not valid");
+            }
+            if (!item.ItemId.HasValue)
+            {
+                return BadRequest("Item does not have an Id, please create the item first");
+            }
+
+            var currentBasket = repo.UpdateBasket(basketId, item);
+            return Ok(currentBasket);
+        }
+
 
         [Route("api/v1/{basketId:Guid}/{itemId:Guid}")]
         [HttpDelete]

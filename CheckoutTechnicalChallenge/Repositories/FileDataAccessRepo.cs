@@ -30,28 +30,21 @@ namespace CheckoutTechnicalChallenge.Repositories
             }
         }
 
-        public Basket AddOrUpdateBasket(Guid basketId, Item item)
+        public Basket AddToBasket(Guid basketId, Item item)
         {
-            if (string.IsNullOrWhiteSpace(item.ItemName) || item.ItemQuantity.Equals(0))
-            {
-                throw new ApplicationException("item is not valid");
-            }
+            var b = GetValidBasketAndItem(basketId, item);
+            item.ItemId = Guid.NewGuid();
 
-            Basket b = GetBasket(basketId);
-            if (b == null)
-            {
-                throw new ApplicationException("Basket Id is invalid");
-            }
+            b.Items.RemoveAll(f => f.ItemId.Equals(item.ItemId));
+            b.Items.Add(item);
+            SaveDatabase();
 
-            if (b.Items == null)
-            {
-                b.Items = new List<Item>();
-            }
+            return b;
+        }
 
-            if (item.ItemId == Guid.Empty)
-            {
-                item.ItemId = Guid.NewGuid();
-            }
+        public Basket UpdateBasket(Guid basketId, Item item)
+        {
+            var b = GetValidBasketAndItem(basketId, item);
 
             b.Items.RemoveAll(f => f.ItemId.Equals(item.ItemId));
             b.Items.Add(item);
@@ -98,7 +91,7 @@ namespace CheckoutTechnicalChallenge.Repositories
         /// <summary>
         /// Save the database
         /// </summary>
-        public void SaveDatabase()
+        private void SaveDatabase()
         {
             var db = JsonConvert.SerializeObject(_database, Formatting.Indented);
             File.WriteAllText(DatabaseFileName, db);
@@ -107,16 +100,36 @@ namespace CheckoutTechnicalChallenge.Repositories
         /// <summary>
         /// Return Basket
         /// </summary>
-        /// <param name="g"></param>
+        /// <param name="basketId"></param>
         /// <returns></returns>
-        public Basket GetBasket(Guid g)
+        public Basket GetBasket(Guid basketId)
         {
-            if (!_database.Keys.Contains(g))
+            if (!_database.Keys.Contains(basketId))
             {
                 return null;
             }
 
-            return _database[g];
+            return _database[basketId];
+        }
+
+        private Basket GetValidBasketAndItem(Guid basketId, Item item)
+        {
+            if (string.IsNullOrWhiteSpace(item.ItemName) || item.ItemQuantity.Equals(0))
+            {
+                throw new ApplicationException("item is not valid");
+            }
+
+            Basket b = GetBasket(basketId);
+            if (b == null)
+            {
+                throw new ApplicationException("Basket does not exist");
+            }
+            if (b.Items == null)
+            {
+                b.Items = new List<Item>();
+            }
+
+            return b;
         }
     }
 }
