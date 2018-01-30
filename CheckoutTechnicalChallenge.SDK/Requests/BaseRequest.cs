@@ -11,7 +11,7 @@ namespace CheckoutTechnicalChallenge.SDK.Requests
 {
     public abstract class BaseRequest
     {
-        public string baseUrl => "http://localhost:49921/";
+        public string baseUrl => "http://localhost:31544/";
         public abstract string requestUrl { get; }
         public abstract string jsonString { get; }
 

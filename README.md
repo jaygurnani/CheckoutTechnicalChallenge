@@ -1,4 +1,3 @@
-TYPE or PASTE your text # Check Technical Test
 ## Things built:
 * WebAPI that has 6 endpoint: 
     1. Create a basket, 
@@ -11,7 +10,7 @@ TYPE or PASTE your text # Check Technical Test
 * Validation is done in the Controller
 * All repositories now use an interface. This allows us to switch the underlying system without breaking code.
 * A file is placed in the C drive - "C:\Database.json" serves as a file based storage mechanism. 
-* Variables are made private only when used within the same class and are prefixed with "_".
+* Variables are made private only when used within the same class.
 * 2 types of unit tests are created, success unit tests and unit tests that cause failure messages on purpose.
 * A postman collection is also saved in the root folder for ease of use for testing.
 
@@ -23,4 +22,7 @@ TYPE or PASTE your text # Check Technical Test
 
 # Steps to Run
 1. Open Visual studio as an Administrator.
-2. Run the Repository and SDK Unit Tests in the Unit Test project.
+2. Run the Repository Unit Test class.
+3. Open another instance of Visual Studio in to act as the HTTP Server and run the server.
+4. Run the SDK Unit Test class.
+5. All unit tests should now pass.
