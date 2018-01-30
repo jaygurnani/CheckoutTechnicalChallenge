@@ -12,7 +12,7 @@ namespace CheckoutTechnicalChallenge.Tests
     {
         #region Repository Tests
 
-        private IDataAccessRepo repo;
+        private readonly IDataAccessRepo repo;
         public RepositoryUnitTests()
         {
             repo = new FileDataAccessRepo();

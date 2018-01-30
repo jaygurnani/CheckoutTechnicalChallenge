@@ -3,12 +3,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CheckoutTechnicalChallenge.SDK;
 using CheckoutTechnicalChallenge.SDK.Models;
 using System.Linq;
+using System.Net;
 
 namespace CheckoutTechnicalChallenge.Tests
 {
     [TestClass]
     public class SDKUnitTests
     {
+        #region Success SDK Unit Tests
+
         private CheckoutTechnicalChallengeSDK sdk;
         public SDKUnitTests()
         {
@@ -84,7 +87,7 @@ namespace CheckoutTechnicalChallenge.Tests
         }
 
         [TestMethod]
-        public void SDKCanRemoveFromBasket()
+        public void SDKCanRemoveFromBasketFailure()
         {
             Guid basketId = sdk.CreateBasket();
             Item item = new Item
@@ -92,13 +95,38 @@ namespace CheckoutTechnicalChallenge.Tests
                 ItemName = string.Concat("JayTest", DateTime.Now.ToShortTimeString()),
                 ItemQuantity = 10
             };
-
-            var result = sdk.AddToBasket(basketId, item);
-            var newResult = sdk.RemoveFromBasket(basketId, result.Items.First().ItemId.Value);
-
-            Assert.IsNotNull(newResult);
-            Assert.IsTrue(newResult.Items.Count.Equals(0));
+            try
+            {
+                var result = sdk.AddToBasket(Guid.Empty, item);
+                Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+            }
         }
+        #endregion
+
+        #region Failure SDK Unit Test
+        public void SDKCanAddToBasketFailure()
+        {
+            var basketId = sdk.CreateBasket();
+            Item item = new Item
+            {
+                ItemName = string.Concat("JayTest", DateTime.Now.ToShortTimeString()),
+                ItemQuantity = -1
+            };
+            try
+            {
+                var result = sdk.AddToBasket(basketId, item);
+                Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+            }   
+        }
+        #endregion
 
     }
 }

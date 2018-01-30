@@ -15,7 +15,7 @@ namespace CheckoutTechnicalChallenge.Controllers
     /// </summary>
     public class BasketController : ApiController
     {
-        IDataAccessRepo repo;
+        readonly IDataAccessRepo repo;
 
         /// <summary>
         /// Constructor
